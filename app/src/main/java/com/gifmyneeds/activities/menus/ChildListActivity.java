@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.gifmyneeds.R;
 import com.gifmyneeds.activities.child.AddChildActivity;
+import com.gifmyneeds.activities.child.GifBoardActivity;
 import com.gifmyneeds.activities.user.SelectCategoryForBoardActivity;
 import com.gifmyneeds.adapters.ChildListAdapter;
 
@@ -32,7 +33,6 @@ public class ChildListActivity extends AppCompatActivity implements SearchView.O
         private ArrayList<Child> childsList;
         private ChildListAdapter adapter;
         private Button btnAddChild,btnSeleChild, btnEditChild;
-
         private ListView childListView;
         private SearchView childSearchView;
         private Child selectedChild;
@@ -124,20 +124,21 @@ public class ChildListActivity extends AppCompatActivity implements SearchView.O
 
                 case R.id.btnSelectChild:
                     if (selectedChild!=null) {
-                        Intent i = new Intent(ChildListActivity.this, ChildMenuActivity.class);
+                        Intent i = new Intent(ChildListActivity.this, GifBoardActivity.class);
                         i.putExtra("id",selectedChild.getId());
                         startActivity(i);
-                        finish();
+//                        finish();
                     }
                     else
                         Toast.makeText(this,R.string.no_selected_child, Toast.LENGTH_LONG).show();
                     break;
                 case R.id.btnEditChildBoard:
+
                     if (selectedChild!=null) {
                         Intent i = new Intent(ChildListActivity.this, SelectCategoryForBoardActivity.class);
                         i.putExtra("id",selectedChild);
                         startActivity(i);
-                        finish();
+                        //finish();
                     }
                     else
                         Toast.makeText(this,R.string.no_selected_child, Toast.LENGTH_LONG).show();
@@ -155,7 +156,7 @@ public class ChildListActivity extends AppCompatActivity implements SearchView.O
 
         private void addChild(){
             Log.d(TAG, "addChild: add child function");
-            List<Child> l = ChildDBApi.getChildrenOfParent(this, userLogin.getEmail());
+            List<Child> l = ChildDBApi.getChildrenOfParent(this, userLogin.getEmail()); //TODO:
             if (l != null) {
                 Log.d(TAG, "addChild: " + l.toString());
                 childsList = new ArrayList<>(l);
@@ -164,5 +165,6 @@ public class ChildListActivity extends AppCompatActivity implements SearchView.O
                 Log.d(TAG, "addChild: NULL!!!!!!!!!!!!!");
                 childsList = new ArrayList<>();
             }
+
         }
     }

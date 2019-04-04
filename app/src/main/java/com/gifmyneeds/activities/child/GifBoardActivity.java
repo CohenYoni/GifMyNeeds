@@ -37,12 +37,17 @@ public class GifBoardActivity extends AppCompatActivity {
         setContentView(R.layout.gif_board_activity_layout);
 
 
-        Intent intent = getIntent();
-        child = (ChildGifs) intent.getSerializableExtra("childgifs");
+        //Intent intent = getIntent();
+        //child = (ChildGifs) intent.getSerializableExtra("childgifs");
 
 
-        childVideoList = child.getPathGif();
-
+        //childVideoList = child.getPathGif();
+        childVideoList = new ArrayList<String>();
+        childVideoList.add(R.raw.eat_sandwich + "");
+        childVideoList.add(R.raw.eat_bamba + "");
+        childVideoList.add(R.raw.drink_tea + "");
+        childVideoList.add(R.raw.drink_coke + "");
+        childVideoList.add(R.raw.thanks + "");
 
 
         getWindow().setFormat(PixelFormat.UNKNOWN);

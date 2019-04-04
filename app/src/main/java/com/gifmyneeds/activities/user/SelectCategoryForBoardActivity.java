@@ -37,46 +37,56 @@ public class SelectCategoryForBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_category_for_board_activity_layout);
 
+
+
         category_spinner = (Spinner) findViewById(R.id.categorySpinner);
         add_btn = (ImageButton) findViewById(R.id.imageButton);
         choose_gif_btn = (Button) findViewById(R.id.choose_gif);
         table_childes_gif = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         category_list = new ArrayList<String>();
+        choose_gif_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SelectCategoryForBoardActivity.this, SelectGifsForBoardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        if(count == 0)
-        {
-            String[] array = {"bla1", "bla2", "bla3"};
+//        if(count == 0)
+//        {
+//            String[] array = {"bla1", "bla2", "bla3"};
+//
+//            ArrayList<String> lst = new ArrayList<String>(Arrays.asList(array));
+//
+//            Intent intent  = getIntent();
+//            Child child = (Child) intent.getSerializableExtra("id");
+//
+//            child_id = child.getId();
+//
+//            List<ChildGifs> testList= new ArrayList<ChildGifs>();
+//
+//            ChildGifs obj = new ChildGifs(child_id, "food", lst);
+//            ChildGifs obj1 = new ChildGifs(child_id, "drink", lst);
+//
+//            testList.add(obj);
+//            testList.add(obj1);
+//
+//            Gson gson = new Gson();
+//            String json = gson.toJson(testList);
+//
+//            SharedPreferences.Editor editor = table_childes_gif.edit();
+//
+//            //editor.clear();
+//
+//            editor.putString(child_id, json);
+//
+//            editor.commit();
+//            count++;
+//        }
 
-            ArrayList<String> lst = new ArrayList<String>(Arrays.asList(array));
 
-            Intent intent  = getIntent();
-            Child child = (Child) intent.getSerializableExtra("id");
-
-            child_id = child.getId();
-
-            List<ChildGifs> testList= new ArrayList<ChildGifs>();
-
-            ChildGifs obj = new ChildGifs(child_id, "אוכל", lst);
-            ChildGifs obj1 = new ChildGifs(child_id, "שתייה", lst);
-
-            testList.add(obj);
-            testList.add(obj1);
-
-            Gson gson = new Gson();
-            String json = gson.toJson(testList);
-
-            SharedPreferences.Editor editor = table_childes_gif.edit();
-
-            //editor.clear();
-
-            editor.putString(child_id, json);
-
-            editor.commit();
-            count++;
-        }
-
-
-        // get child id from previous activity
+//         get child id from previous activity
         Intent intent= getIntent();
         Bundle bundle  = intent.getExtras();
 
@@ -97,7 +107,7 @@ public class SelectCategoryForBoardActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(SelectCategoryForBoardActivity.this, AddNewCategoryActivity.class);
                 intent.putExtra("child_id", child_id);
-                startActivity(intent);
+//                startActivity(intent);
             }
         });
     }
@@ -140,7 +150,7 @@ public class SelectCategoryForBoardActivity extends AppCompatActivity {
                         obj = child_gifs;
                 }
 
-                addListenerOnButtonChooseGif(obj);
+
 
 //                // Notify the selected item text
 //                Toast.makeText
@@ -155,19 +165,19 @@ public class SelectCategoryForBoardActivity extends AppCompatActivity {
         });
     }
 
-    public void addListenerOnButtonChooseGif(final ChildGifs obj){
-
-        choose_gif_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(SelectCategoryForBoardActivity.this, SelectGifsForBoardActivity.class);
-                intent.putExtra("child_gif", obj);
-                startActivity(intent);
-            }
-        });
-    }
+//    public void addListenerOnButtonChooseGif(final ChildGifs obj){
+//
+//        choose_gif_btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(SelectCategoryForBoardActivity.this, SelectGifsForBoardActivity.class);
+////                intent.putExtra("child_gif", obj);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
 //    public void addNewChildToPreferences(String child_id){
 //        int score = SharedConstants.scoreMap.get(answer);

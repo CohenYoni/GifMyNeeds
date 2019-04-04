@@ -1,9 +1,11 @@
 package com.gifmyneeds.activities.user;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,15 +15,20 @@ import android.widget.VideoView;
 
 import com.gifmyneeds.R;
 import com.gifmyneeds.activities.MainActivity;
+import com.gifmyneeds.models.Child;
 import com.gifmyneeds.models.ChildGifs;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SelectGifsForBoardActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private ArrayList<String> allVideo ;
     private ArrayList<String> str = new ArrayList<String>();
     private  ChildGifs childGifs;
+    private Button submit;
 
     private static final String TAG = "SelectGifsForBoardActiv";
 
@@ -29,13 +36,16 @@ public class SelectGifsForBoardActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_gifs_for_board_activity_layout);
+        submit = (Button) findViewById(R.id.SubmitButton);
+        childGifs = moc();
+
 
         Intent incomingIntent = getIntent();
         Bundle bundle = incomingIntent.getExtras();
-        childGifs = (ChildGifs) incomingIntent.getSerializableExtra("child_gif");
+//        childGifs = (ChildGifs) incomingIntent.getSerializableExtra("child_gif");
 
         childGifs.setPathGif(new ArrayList<String>());
-        new ChildGifs("1234","eat",str);
+        //new ChildGifs("1234","eat",str);
 
 
 
@@ -81,6 +91,8 @@ public class SelectGifsForBoardActivity extends AppCompatActivity implements Vie
         buttonPlayVideo10.setOnClickListener(this);
         buttonPlayVideo11.setOnClickListener(this);
         buttonPlayVideo12.setOnClickListener(this);
+        submit.setOnClickListener(this);
+
         //-----------------------------------------------------------------
 
 
@@ -511,16 +523,65 @@ public class SelectGifsForBoardActivity extends AppCompatActivity implements Vie
                 break;
             //-----------------------------------
             case R.id.SubmitButton:
-                Intent intent = new Intent(SelectGifsForBoardActivity.this,
-                        SelectCategoryForBoardActivity.class);
-                intent.putExtra("child_gif", childGifs);
+
+//                Intent intent = new Intent(SelectGifsForBoardActivity.this,
+//                        SelectCategoryForBoardActivity.class);
+
+
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                Gson gson = new Gson();
+                String json = gson.toJson(childGifs);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("child_gif", json);
+                editor.commit();
+
+
+
+//                intent.putExtra("child_gif", childGifs);
+//                startActivity(intent);
                 finish();
-                startActivity(intent);
+
 
 
                 break;
         }
 
     }
+
+    private ChildGifs moc() {
+//        if(count == 0)
+//        {
+//            String[] array = {"bla1", "bla2", "bla3"};
+//
+//            ArrayList<String> lst = new ArrayList<String>(Arrays.asList(array));
+//
+//            Intent intent  = getIntent();
+//            Child child = (Child) intent.getSerializableExtra("id");
+//
+//            child_id = child.getId();
+//
+//            List<ChildGifs> testList= new ArrayList<ChildGifs>();
+//
+//            ChildGifs obj = new ChildGifs(child_id, "food", lst);
+//            ChildGifs obj1 = new ChildGifs(child_id, "drink", lst);
+//
+//            testList.add(obj);
+//            testList.add(obj1);
+//
+//            Gson gson = new Gson();
+//            String json = gson.toJson(testList);
+//
+//            SharedPreferences.Editor editor = table_childes_gif.edit();
+//
+//            //editor.clear();
+//
+//            editor.putString(child_id, json);
+//
+//            editor.commit();
+//            count++;
+        ChildGifs childGifs = new ChildGifs("205508955","food",null);
+        return childGifs;
+        }
+
 
 }
